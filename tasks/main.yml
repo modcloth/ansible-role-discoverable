@@ -1,2 +1,24 @@
 ---
-# tasks file for discoverable
+- name: write etc default file with vars
+  template:
+    src: etc_default.j2
+    dest: /etc/default/discoverable
+    owner: root
+    group: root
+    mode: 0644
+- name: write cron job wrapper
+  template:
+    src: discoverable_cron_wrapper.j2
+    dest: /usr/local/bin/discoverable-cron-wrapper
+    owner: root
+    group: root
+    mode: 0755
+- name: create cron job
+  cron:
+    name: "{{ discoverable_cron_schedule }}"
+    minute: "{{ discoverable_cron_schedule.split()[0] }}"
+    hour: "{{ discoverable_cron_schedule.split()[1] }}"
+    day: "{{ discoverable_cron_schedule.split()[2] }}"
+    month: "{{ discoverable_cron_schedule.split()[3] }}"
+    weekday: "{{ discoverable_cron_schedule.split()[4] }}"
+    job: /usr/local/bin/discoverable-cron-wrapper >>/var/log/discoverable.log 2>>/var/log/discoverable.err

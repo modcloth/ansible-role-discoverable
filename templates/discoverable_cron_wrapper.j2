@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -a
+set -x
+
+function main() {
+  # source vars file
+  source /etc/default/discoverable
+
+  # ensure discovery url directory exists
+  curl -sL -XPUT "$(leader)/v2/keys${ETCD_PREFIX}${DISCOVERY_URL}?recursive=true" -d dir=true || true
+
+  # add entry for current host
+  curl -sL -XPUT "$(leader)/v2/keys${ETCD_PREFIX}${DISCOVERY_URL}/${DISCOVERY_HOSTNAME}" -d value="${DISCOVERY_IP}:${DISCOVERY_PORT}" -d ttl=${DISCOVERY_TTL}
+}
+
+# to make sure we talk to the leader for PUT operations
+function leader() {
+  curl -sL ${ETCD_HOST}/v2/leader | awk -F\: '{print $1 ":" $2 ":4001"}'
+}
+
+main "$@"
