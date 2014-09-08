@@ -1,10 +1,10 @@
-# vim:filetype=sh
+# vim:filetype=jinja
 # {{ ansible_managed }}
 
+DISCOVERY_HOSTNAME={{ hostname | default(ansible_fqdn) }}
+DISCOVERY_IP={{ ansible_default_ipv4.address }}
+DISCOVERY_PORT={{ discoverable_discovery_port }}
+DISCOVERY_TTL={{ discoverable_discovery_ttl }}
+DISCOVERY_URL={{ discoverable_discovery_url }}
 ETCD_HOST={{ discoverable_etcd_host }}
 ETCD_PREFIX={{ discoverable_etcd_prefix }}
-DISCOVERY_URL={{ discoverable_discovery_url }}
-DISCOVERY_TTL={{ discoverable_discovery_ttl }}
-DISCOVERY_PORT={{ discoverable_discovery_port }}
-DISCOVERY_IP={{ ansible_default_ipv4.address }}
-DISCOVERY_HOSTNAME={{ hostname | default(ansible_fqdn) }}
