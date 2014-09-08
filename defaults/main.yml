@@ -1,2 +1,5 @@
 ---
 # defaults file for discoverable
+discoverable_discovery_ttl: 604800
+discoverable_cron_schedule: "* * * * *"
+discoverable_etcd_prefix: ""
