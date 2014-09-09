@@ -17,7 +17,7 @@ discoverable_discovery_ttl: 604800
 #string, required - should be of the format "/%s"
 discoverable_discovery_url: #example: /app-prod
 
-#string, required - should be of the format "<prefix>"
+#string, required
 discoverable_etc_host:
 
 #string, required
